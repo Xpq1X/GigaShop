@@ -1,0 +1,118 @@
+/* public/css/register.css */
+
+/* Global Styles */
+body {
+    font-family: 'Roboto Mono', monospace; /* Scientific-looking font */
+    background: linear-gradient(to right, #FAD02E, #FF7A00); /* Yellow to Orange Gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333; /* Text color */
+}
+
+/* Container for the registration form */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for a smooth effect */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Makes it responsive */
+    text-align: center;
+}
+
+/* Shop Name Styling */
+.shop-name {
+    font-size: 36px;
+    color: #FAD02E; /* Match with the background color */
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+/* Title Style */
+h1 {
+    color: #333; /* Dark text color for contrast */
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 27px;
+}
+
+/* Mini title for Register */
+h2 {
+    color: #FF7A00; /* Orange color */
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Input Fields Style */
+input[type="email"],
+input[type="password"],
+input[type="text"] { /* Added input[type="text"] for full name */
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #FF7A00;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff4e1; /* Light yellow background for inputs */
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus { /* Focus styles for full name as well */
+    border-color: #FAD02E;
+    outline: none;
+    background-color: #fff1cc;
+}
+
+/* Button Style */
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #FF7A00;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #FAD02E;
+}
+
+/* Error Message Style */
+.error-list {
+    color: #ff4d4d;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.error-list li {
+    margin-bottom: 5px;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+        width: 80%; /* Adjust form width for smaller screens */
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"], /* Full name input */
+    button {
+        padding: 12px;
+    }
+}
