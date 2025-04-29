@@ -1,11 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
 
-// Protect admin routes with auth middleware
+// Home page
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Authentication Routes (only accessible for guests)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
+});
+
+// Logout Route (accessible to authenticated users)
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Admin Routes (protected)
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/admin/products', [AdminController::class, 'store'])->name('admin.products.store');
@@ -13,16 +30,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/products/{id}', [AdminController::class, 'destroy'])->name('admin.products.destroy');
 });
 
-// Home page
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Authentication Routes (Login, Logout, etc.)
-Auth::routes(); // This automatically includes login, register, and logout routes
-
-// Admin Routes (protected by auth middleware)
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-    // Add more admin routes here as needed
-});
+// Home after login
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
