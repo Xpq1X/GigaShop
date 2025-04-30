@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); // This ensures only authenticated users can access this page
     }
 
     /**
@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home'); // Returns the home view after login
     }
 }

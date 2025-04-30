@@ -8,20 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
+    
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            return response()->json([
-                'message' => 'Login successful',
-                'user' => $user,
-                'token' => $user->createToken('YourAppName')->plainTextToken,
-            ]);
+            $request->session()->regenerate();
+            return redirect()->intended('/home'); // Redirect to home after successful login
         }
-
-        return response()->json(['error' => 'Invalid credentials'], 401);
+    
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
     public function logout(Request $request)
@@ -29,7 +32,8 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return response()->json(['message' => 'Logged out successfully']);
+    
+        return redirect('/');
     }
+    
 }

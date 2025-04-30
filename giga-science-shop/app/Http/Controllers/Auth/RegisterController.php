@@ -10,26 +10,34 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
     public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string|min:8|confirmed',
         ]);
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        Auth::login($user);
-
-        return response()->json([
-            'message' => 'Registration successful',
-            'user' => $user,
-            'token' => $user->createToken('YourAppName')->plainTextToken,
-        ]);
+    
+        Auth::login($user); // log them in immediately
+        return redirect('/home');
     }
+    public function logout(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+}
+
 }
