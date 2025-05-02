@@ -8,22 +8,36 @@ giga-science-shop/
 │   │   │   │   ├── ForgotPasswordController.php
 │   │   │   │   ├── ResetPasswordController.php
 │   │   │   ├── ProductController.php
-│   │   │   ├── AdminController.php
-│   │   │   ├── HomeController.php
+│   │   │   ├── Controller.php
 │   │   │   ├── OrderController.php
-│   │   │   ├── CartController.php
 │   │   ├── Middleware/
-│   │   │   ├── AdminMiddleware.php
 │   │   │   ├── EnsureEmailIsVerified.php
 │   │   ├── Requests/auth/
 │   │   │   ├── LoginRequest.php
 │   │   ├── Kernel.php
+│   ├── Filament/Resources/
+│   │   ├── OrderResource.php
+│   │   ├── ProductResource.php
+│   │   ├── OrderResource/
+│   │   │   ├── Pages/
+│   │   │   │   ├── CreateOrder.php
+│   │   │   │   ├── EditOrder.php
+│   │   │   │   ├── ListOrders.php
+│   │   │   ├── Widgets/
+│   │   │   │   ├── TotalSales.php
+│   │   ├── ProductResource/
+│   │   │   ├── Pages/
+│   │   │   │   ├── CreateProduct.php
+│   │   │   │   ├── EditProduct.php
+│   │   │   │   ├── ListProducts.php
 │   ├── Models/
 │   │   ├── Order.php
 │   │   ├── Product.php
 │   │   ├── User.php
 │   ├── Providers/
 │   │   ├── AppServiceProvider.php
+│   │   ├── Filament/
+│   │   │   ├── AdminPanelProvider.php
 ├── bootstrap/
 │   ├── app.php
 │   ├── providers.php
@@ -74,6 +88,7 @@ giga-science-shop/
 │   │   │   │   ├──  passwords/
 ├── public/
 │   ├── css/
+│   ├── js/
 │   ├── storage/
 │   │   ├── images/
 ├── storage/
@@ -110,6 +125,13 @@ giga-science-shop/
 │   │   │   ├── ProductsPage.css
 │   │   │   ├── MiniCart.css
 │   │   ├── mockProducts.js
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   ├── vite.config.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── .gitignore
 ├── artisan
 ├── composer.json
 ├── composer.lock

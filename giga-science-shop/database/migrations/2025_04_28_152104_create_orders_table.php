@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->json('products');
             $table->decimal('total', 8, 2);
+            $table->string('address'); // Added address field
+            $table->string('payment_method'); // Added payment method field
             $table->timestamps();
         });
     }

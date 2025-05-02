@@ -8,13 +8,15 @@ use App\Models\User;
 class AdminUserSeeder extends Seeder
 {
     public function run()
-    {
-        // Create an admin user
+{
+    if (!User::where('email', 'admin@gmail.com')->exists()) {
         User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('Admin123'), // Use bcrypt for hashing
-            'is_admin' => true,  // Make sure to have an 'is_admin' column
+            'password' => bcrypt('Admin123'), // Always use bcrypt to hash passwords
+            'is_admin' => true, // Make sure this field exists in the User model
         ]);
     }
+}
+
 }

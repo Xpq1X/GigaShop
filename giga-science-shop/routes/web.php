@@ -3,16 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
-// Welcome page
+
+// CSRF token route to set cookies
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['message' => 'CSRF token set']);
+});
+
+// Public home page
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Home page (protected)
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 // Authentication Routes (only accessible for guests)
 Route::middleware('guest')->group(function () {
@@ -23,25 +26,14 @@ Route::middleware('guest')->group(function () {
 });
 
 // Logout Route (accessible to authenticated users)
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// Admin Routes (protected)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/products', function () {
-        return 'Products Dashboard (placeholder)';
-    })->name('admin.products');
-
-    Route::get('/admin/users', function () {
-        return 'Users Dashboard (placeholder)';
-    })->name('admin.users');
-
-    Route::get('/admin/orders', function () {
-        return 'Orders Dashboard (placeholder)';
-    })->name('admin.orders');
-
-    // Optional: Real admin controller routes
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::post('/admin/products', [AdminController::class, 'store'])->name('admin.products.store');
-    Route::put('/admin/products/{id}', [AdminController::class, 'update'])->name('admin.products.update');
-    Route::delete('/admin/products/{id}', [AdminController::class, 'destroy'])->name('admin.products.destroy');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    
+    // Orders Routes
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');  // View all orders
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');  // Create new order
+    
+    // Product Routes (accessible to authenticated users as well)
+    Route::resource('products', ProductController::class);
 });
+
