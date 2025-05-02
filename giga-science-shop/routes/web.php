@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
-
 // CSRF token route to set cookies
 Route::get('/sanctum/csrf-cookie', function () {
     return response()->json(['message' => 'CSRF token set']);
@@ -36,4 +35,3 @@ Route::middleware('auth')->group(function () {
     // Product Routes (accessible to authenticated users as well)
     Route::resource('products', ProductController::class);
 });
-

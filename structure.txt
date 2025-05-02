@@ -12,6 +12,7 @@ giga-science-shop/
 │   │   │   ├── OrderController.php
 │   │   ├── Middleware/
 │   │   │   ├── EnsureEmailIsVerified.php
+│   │   │   ├── VerifyCsrfToken.php
 │   │   ├── Requests/auth/
 │   │   │   ├── LoginRequest.php
 │   │   ├── Kernel.php
@@ -112,19 +113,29 @@ giga-science-shop/
 │   │   ├── pages/
 │   │   │   ├── CartPage.jsx
 │   │   │   ├── ProductsPage.jsx
+│   │   │   ├── SettingsPage.jsx
+│   │   │   ├── FAQPage.jsx
+│   │   │   ├── ProductsPage.jsx
 │   │   │   ├── AddProductPage.jsx
-│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── OrdersPage.jsx
+│   │   │   ├── RegisterPage.jsx
+│   │   │   ├── LoginPage.jsx
+│   │   │   ├── CheckoutPage.jsx
 │   │   │   ├── ContactPage.jsx
 │   │   │   ├── HomePage.jsx
 │   │   │   ├── ProductDetailPage.jsx
 │   │   ├── styles/
 │   │   │   ├── CartPage.css
 │   │   │   ├── Contact.css
+│   │   │   ├── CheckoutPage.css
+│   │   │   ├── LoginPage.css
+│   │   │   ├── RegisterPage.css
+│   │   │   ├── OrdersPage.css
 │   │   │   ├── Header.css
 │   │   │   ├── Home.css
 │   │   │   ├── ProductsPage.css
 │   │   │   ├── MiniCart.css
-│   │   ├── mockProducts.js
+│   │   ├── firebase.js
 │   ├── public/
 │   │   ├── index.html
 │   │   ├── manifest.json

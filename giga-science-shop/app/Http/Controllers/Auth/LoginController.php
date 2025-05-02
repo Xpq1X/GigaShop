@@ -8,42 +8,47 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
     public function login(Request $request)
     {
+        // Validate the incoming request
         $credentials = $request->only('email', 'password');
 
+        // Attempt to log the user in
         if (Auth::attempt($credentials)) {
+            // Regenerate session after successful login
             $request->session()->regenerate();
 
-            // ✅ This is important: manually call the `authenticated()` method
-            return $this->authenticated($request, Auth::user());
+            // Fetch the authenticated user
+            $user = Auth::user();
+
+            // Check if user is admin and add the flag
+            $isAdmin = $user->isAdmin();
+
+            // Return success response with user data and admin flag
+            return $this->authenticated($request, $user, $isAdmin);
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+        // Return error if credentials are invalid
+        return response()->json(['error' => 'Invalid credentials'], 401);
+    }
+
+    // Custom method to send authenticated user response
+    protected function authenticated(Request $request, $user, $isAdmin)
+    {
+        return response()->json([
+            'user' => $user,
+            'is_admin' => $isAdmin,
+            'message' => 'Logged in successfully'
         ]);
     }
 
-  // Updated `authenticated` method
-protected function authenticated(Request $request, $user)
-{
-    if ($user->is_admin) {
-        return redirect()->route('admin.dashboard'); // Redirect to admin dashboard if admin
-    }
-    return redirect()->route('home'); // Redirect to home if not an admin
-}
-
-
+    // Logout method
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+
+        return response()->json(['message' => 'Logged out successfully']);
     }
 }

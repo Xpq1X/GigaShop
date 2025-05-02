@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
     public function register(Request $request)
     {
         $request->validate([
@@ -26,18 +22,13 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_admin' => false, // Default value for 'is_admin' is false
         ]);
     
-        Auth::login($user); // log them in immediately
-        return redirect('/home');
+        // Automatically login the user
+        Auth::login($user);
+    
+        // Return user data (can return with a success message too)
+        return response()->json(['user' => $user]);
     }
-    public function logout(Request $request)
-{
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect('/');
-}
-
 }

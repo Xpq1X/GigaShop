@@ -8,37 +8,42 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the orders (optional for admin).
-     */
     public function index()
     {
-        // Only allow admin or authenticated users to view orders
-        $orders = Order::all();
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->get();
         return response()->json($orders);
     }
 
-    /**
-     * Store a newly created order in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
             'products' => 'required|array',
-            'total' => 'required|numeric',
-            'address' => 'required|string',
+            'total_price' => 'required|numeric',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'street' => 'required|string',
+            'city' => 'required|string',
+            'postal_code' => 'required|string',
             'payment_method' => 'required|string',
         ]);
 
-        $user = Auth::user(); // Get the currently authenticated user
+        $user = Auth::user();
 
-        // Create new order
         $order = Order::create([
             'user_id' => $user->id,
-            'products' => json_encode($request->products),
-            'total' => $request->total,
-            'address' => $request->address,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'street' => $request->street,
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
             'payment_method' => $request->payment_method,
+            'products' => $request->products,
+            'total_price' => $request->total_price,
+            'status' => 'pending',
+            'paid' => false,
         ]);
 
         return response()->json([
@@ -47,32 +52,17 @@ class OrderController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified order.
-     */
-    public function show($id)
+    public function pay($id)
     {
         $order = Order::findOrFail($id);
-        return response()->json($order);
-    }
 
-    /**
-     * Update the specified order.
-     */
-    public function update(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-        $order->update($request->all());
-        return response()->json($order);
-    }
+        if ($order->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
-    /**
-     * Remove the specified order.
-     */
-    public function destroy($id)
-    {
-        $order = Order::findOrFail($id);
-        $order->delete();
-        return response()->json(['message' => 'Order deleted successfully']);
+        $order->paid = true;
+        $order->save();
+
+        return response()->json(['message' => 'Order marked as paid.']);
     }
 }
