@@ -9,11 +9,9 @@ use App\Http\Controllers\Auth\RegisterController;
 // Public Routes
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
 
-// Authenticated Routes (using sanctum)
-Route::middleware('auth:sanctum')->group(function () {
+// Authenticated Routes (using Firebase token for authentication)
+Route::middleware('firebase.auth')->group(function () {  // You can implement your own middleware to verify Firebase token here
     Route::post('/order', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);  // ✅ GET orders
     Route::post('/orders/{id}/pay', [OrderController::class, 'pay']);  // ✅ PAY order

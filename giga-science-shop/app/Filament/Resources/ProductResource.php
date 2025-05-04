@@ -28,15 +28,18 @@ class ProductResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()
-                    ->label('Product Name'),
+                    ->label('Product Name')
+                    ->maxLength(255),  // Adding max length to product name
                 Textarea::make('description')
                     ->required()
-                    ->label('Description'),
+                    ->label('Description')
+                    ->maxLength(500),  // Adding max length to description
                 TextInput::make('price')
                     ->required()
                     ->numeric() // Ensures the input is numeric
-                    ->min(0)
-                    ->label('Price'),
+                    ->minValue(0)  // Updated from min(0) to minValue(0)
+                    ->label('Price')
+                    ->placeholder('Enter price in USD'),
                 Select::make('category')
                     ->options([
                         'science' => 'Science',
@@ -66,12 +69,13 @@ class ProductResource extends Resource
                     ->label('Category'),
                 TextColumn::make('price')
                     ->sortable()
-                    ->label('Price'),
+                    ->label('Price')
+                    ->formatStateUsing(fn($state) => '$' . number_format($state, 2)), // Format the price with dollar sign
                 ImageColumn::make('image')
                     ->disk('public')
                     ->label('Image'),
                 TextColumn::make('created_at')
-                    ->date()
+                    ->dateTime('F j, Y, g:i a')  // More readable format for creation date
                     ->label('Created At'),
             ])
             ->filters([ /* Add filters if needed */ ])

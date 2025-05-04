@@ -1,10 +1,10 @@
-@php use Illuminate\Support\Facades\Auth; @endphp
+@php use Illuminate\Support\Facades\DB; @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Giga Science Shop</title>
+    <title>Giga Science Shop</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -24,7 +24,7 @@
             padding: 40px;
             border-radius: 10px;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             box-sizing: border-box;
         }
         h1 {
@@ -68,7 +68,6 @@
             color: #bbb;
         }
 
-        /* Responsive Styling */
         @media screen and (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -99,24 +98,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>Welcome to Giga Science Shop!</h1>
-        <p>This system is intended for shop employees and administrators only. Please log in to manage the shop's data and products.</p>
+        <h1>Welcome to Giga Science Shop</h1>
+        <p>This page provides links to view different parts of the database. Click the links below to explore the data.</p>
 
         <div class="button-container">
-            @if (Auth::check())
-                <!-- If the user is logged in -->
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            @else
-                <!-- If the user is not logged in -->
-                <a href="{{ url('/admin/login') }}" class="btn btn-primary">Admin Login</a>
-            @endif
+            <a href="{{ url('/products') }}">View Products</a>  
+            <a href="{{ url('/orders') }}">View Orders</a>
         </div>
     </div>
+
     <div class="footer">
         <p>&copy; 2025 Giga Science Shop | All rights reserved</p>
     </div>

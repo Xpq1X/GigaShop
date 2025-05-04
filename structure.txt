@@ -66,7 +66,6 @@ giga-science-shop/
 │   │   ├── 2025_04_28_151749_create_personal_access_tokens_table.php
 │   │   ├── 2025_04_28_151951_create_products_table.php
 │   │   ├── 2025_04_28_152104_create_orders_table.php
-│   │   ├── 2025_04_28_172832_add_is_admin_to_users_table.php
 │   ├── seeders/
 │   │   ├── DatabaseSeeder.php
 │   │   ├── AdminSeeder.php
@@ -81,15 +80,11 @@ giga-science-shop/
 ├── resources/
 │   │   ├── views/
 │   │   │   ├── welcome.blade.php
-│   │   │   ├── home.blade.php
 │   │   │   ├── Auth/
-│   │   │   │   ├──  login.blade.php
-│   │   │   │   ├──  register.blade.php
-│   │   │   │   ├──  verify.blade.php
-│   │   │   │   ├──  passwords/
+│   │   │   ├── layouts/app.blade.php
 ├── public/
 │   ├── css/
-│   ├── js/
+│   ├── js/filament
 │   ├── storage/
 │   │   ├── images/
 ├── storage/

@@ -32,7 +32,6 @@ class OrderController extends Controller
         $user = Auth::user();
 
         $order = Order::create([
-            'user_id' => $user->id,
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
